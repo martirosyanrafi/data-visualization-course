@@ -16,5 +16,5 @@ def get_output_content(df):
         return html.Div('Cars with these filters don\'t exist.')
     else:
         key = 'model' if len(df.brand.unique()) == 1 else 'brand'
-        fig = px.scatter(x=df[key], y=df.mileage)
+        fig = px.scatter(x=df[key], y=df.mileage, labels={"x": "Model", "y": "Mileage"})
         return dcc.Graph(figure=fig)
