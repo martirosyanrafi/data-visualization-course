@@ -3,10 +3,10 @@ import dash_table
 import dash_html_components as html
 
 
-def get_html(df):
+def get_html_content(df):
     return html.Div([
-        filter.get_html(df),
-        html.Div(id='output-container')
+        filter.get_html_content(df, 'home'),
+        html.Div(id='home-output-container')
     ])
 
 

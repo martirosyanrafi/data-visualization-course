@@ -3,7 +3,7 @@ import dash_bootstrap_components as dbc
 import styles
 
 
-def get_html():
+def get_html_content():
     return html.Div(
         [
             html.H2("US Cars", className="display-4"),

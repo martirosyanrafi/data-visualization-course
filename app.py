@@ -14,18 +14,19 @@ df = pd.read_csv('data/dataset.csv', index_col=0)
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
 app.config.suppress_callback_exceptions = True
+app.title = 'US Cars'
 
-sidebar = sidebar.get_html()
+sidebar = sidebar.get_html_content()
 content = html.Div(id="page-content", style=styles.CONTENT_STYLE)
 app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 
 
-@app.callback(Output('output-container', 'children'), [
-    Input('brand-dropdown', 'value'),
-    Input('color-dropdown', 'value'),
-    Input('state-dropdown', 'value'),
-    Input('year-range-slider', 'value'),
-    Input('price-range-slider', 'value')
+@app.callback(Output('home-output-container', 'children'), [
+    Input('home-brand-dropdown', 'value'),
+    Input('home-color-dropdown', 'value'),
+    Input('home-state-dropdown', 'value'),
+    Input('home-year-range-slider', 'value'),
+    Input('home-price-range-slider', 'value')
 ])
 def update_output(brand, color, state, year, price):
     return home.get_output_content(df[(brand is None or df.brand == brand) &
@@ -36,12 +37,28 @@ def update_output(brand, color, state, year, price):
                                       (df.year > year[0]) & (df.year < year[1])])
 
 
+@app.callback(Output('model-output-container', 'children'), [
+    Input('model-brand-dropdown', 'value'),
+    Input('model-color-dropdown', 'value'),
+    Input('model-state-dropdown', 'value'),
+    Input('model-year-range-slider', 'value'),
+    Input('model-price-range-slider', 'value')
+])
+def update_output(brand, color, state, year, price):
+    return model.get_output_content(df[(brand is None or df.brand == brand) &
+                                      (color is None or df.color == color) &
+                                      (state is None or df.state == state) &
+                                      (df.price > price[0]) &
+                                      (df.price < price[1]) &
+                                      (df.year > year[0]) & (df.year < year[1])])
+
+
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
     if pathname == "/":
-        return home.get_html(df)
+        return home.get_html_content(df)
     elif pathname == "/model":
-        return model.get_html(df)
+        return model.get_html_content(df)
     elif pathname == "/page-2":
         return html.P("Oh cool, this is page 2!")
 

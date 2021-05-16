@@ -4,26 +4,26 @@ import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 
 
-def get_html(df):
+def get_html_content(df, name):
     return html.Div([
         dbc.Row([
             dbc.Col(
                 dcc.Dropdown(
-                    id='brand-dropdown',
+                    id=name + '-brand-dropdown',
                     placeholder='Brand',
                     options=np.vectorize(lambda v: {'label': v.title(), 'value': v})(df.brand.unique())
                 )
             ),
             dbc.Col(
                 dcc.Dropdown(
-                    id='color-dropdown',
+                    id=name + '-color-dropdown',
                     placeholder='Color',
                     options=np.vectorize(lambda v: {'label': v, 'value': v})(np.sort(df.color.unique()))
                 )
             ),
             dbc.Col(
                 dcc.Dropdown(
-                    id='state-dropdown',
+                    id=name + '-state-dropdown',
                     placeholder='State',
                     options=np.vectorize(lambda v: {'label': v.title(), 'value': v})(df.state.unique())
                 )
@@ -34,7 +34,7 @@ def get_html(df):
             dbc.Col([
                 html.P("Price"),
                 dcc.RangeSlider(
-                    id='price-range-slider',
+                    id=name + '-price-range-slider',
                     min=1000,
                     max=100000,
                     value=[1000, 100000],
@@ -47,7 +47,7 @@ def get_html(df):
             dbc.Col([
                 html.P("Year"),
                 dcc.RangeSlider(
-                    id='year-range-slider',
+                    id=name + '-year-range-slider',
                     min=1970,
                     max=2020,
                     value=[1970, 2020],
