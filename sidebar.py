@@ -4,7 +4,7 @@ import styles
 
 
 def get_html():
-    html.Div(
+    return html.Div(
         [
             html.H2("Sidebar", className="display-4"),
             html.Hr(),
