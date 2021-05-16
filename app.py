@@ -1,5 +1,6 @@
 import dash
 import home
+import model
 import styles
 import sidebar
 import pandas as pd
@@ -19,12 +20,28 @@ content = html.Div(id="page-content", style=styles.CONTENT_STYLE)
 app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 
 
+@app.callback(Output('output-container', 'children'), [
+    Input('brand-dropdown', 'value'),
+    Input('color-dropdown', 'value'),
+    Input('state-dropdown', 'value'),
+    Input('year-range-slider', 'value'),
+    Input('price-range-slider', 'value')
+])
+def update_output(brand, color, state, year, price):
+    return home.get_output_content(df[(brand is None or df.brand == brand) &
+                                      (color is None or df.color == color) &
+                                      (state is None or df.state == state) &
+                                      (df.price > price[0]) &
+                                      (df.price < price[1]) &
+                                      (df.year > year[0]) & (df.year < year[1])])
+
+
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
     if pathname == "/":
-        return home.get_html()
-    elif pathname == "/page-1":
-        return html.P("This is the content of page 1. Yay!")
+        return home.get_html(df)
+    elif pathname == "/model":
+        return model.get_html(df)
     elif pathname == "/page-2":
         return html.P("Oh cool, this is page 2!")
 
