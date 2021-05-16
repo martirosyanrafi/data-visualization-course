@@ -5,6 +5,7 @@ import filter
 import styles
 import sidebar
 import mileage
+import state as st
 import color as col
 import pandas as pd
 import dash_core_components as dcc
@@ -44,6 +45,11 @@ def update_output(brand, color, state, year, price):
     return col.get_output_content(filter.get_df(df, brand, color, state, year, price))
 
 
+@app.callback(filter.get_output('state'), filter.get_inputs('state'))
+def update_output(brand, color, state, year, price):
+    return st.get_output_content(filter.get_df(df, brand, color, state, year, price))
+
+
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
     if pathname == "/":
@@ -54,6 +60,8 @@ def render_page_content(pathname):
         return mileage.get_html_content(df)
     elif pathname == "/color":
         return col.get_html_content(df)
+    elif pathname == "/state":
+        return st.get_html_content(df)
 
     return dbc.Jumbotron([
             html.H1("404: Not found", className="text-danger"),

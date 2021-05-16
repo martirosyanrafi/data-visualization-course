@@ -11,9 +11,12 @@ def get_html_content(df):
 
 
 def get_output_content(df):
-    return dash_table.DataTable(
-        id='table',
-        columns=[{"name": i, "id": i} for i in df.columns],
-        data=df.to_dict('records'),
-        page_size=20
-    )
+    if df.empty:
+        return html.Div('Cars with these filters don\'t exist.')
+    else:
+        return dash_table.DataTable(
+            id='table',
+            columns=[{"name": i, "id": i} for i in df.columns],
+            data=df.to_dict('records'),
+            page_size=20
+        )

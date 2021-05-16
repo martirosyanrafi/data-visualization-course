@@ -16,7 +16,8 @@ def get_html_content():
                     dbc.NavLink("Home", href="/", active="exact"),
                     dbc.NavLink("Model", href="/model", active="exact"),
                     dbc.NavLink("Mileage", href="/mileage", active="exact"),
-                    dbc.NavLink("Color", href="/color", active="exact")
+                    dbc.NavLink("Color", href="/color", active="exact"),
+                    dbc.NavLink("State", href="/state", active="exact")
                 ],
                 vertical=True,
                 pills=True,
