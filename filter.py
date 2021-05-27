@@ -67,9 +67,9 @@ def get_html_content(df, name):
 
 
 def get_df(df, brand, color, state, year, price):
-    return df[(brand is None or df.brand.isin(brand)) &
-              (color is None or df.color.isin(color)) &
-              (state is None or df.state.isin(state)) &
+    return df[(not brand or df.brand.isin(brand)) &
+              (not color or df.color.isin(color)) &
+              (not state or df.state.isin(state)) &
               (df.price > price[0]) &
               (df.price < price[1]) &
               (df.year > year[0]) & (df.year < year[1])]
