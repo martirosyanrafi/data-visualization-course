@@ -5,6 +5,8 @@ import dash_html_components as html
 
 def get_html_content(df):
     return html.Div([
+        html.H1('Overall Car Data'),
+        html.Br(),
         filter.get_html_content(df, 'home'),
         html.Div(id='home-output-container')
     ])
@@ -18,5 +20,5 @@ def get_output_content(df):
             id='table',
             columns=[{"name": i, "id": i} for i in df.columns],
             data=df.to_dict('records'),
-            page_size=20
+            page_size=15
         )

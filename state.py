@@ -11,8 +11,13 @@ with open('data/states.json') as f:
 
 def get_html_content(df):
     return html.Div([
+        html.H1('State'),
+        html.Br(),
         filter.get_html_content(df, 'state'),
-        html.Div(id='state-output-container')
+        html.Div(id='state-output-container'),
+        html.Br(),
+        html.Br(),
+        html.H6('This map shows the distribution of cars in US by states based on the selected filters.')
     ])
 
 
