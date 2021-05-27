@@ -11,6 +11,7 @@ def get_html_content(df, name):
             dbc.Col(
                 dcc.Dropdown(
                     id=name + '-brand-dropdown',
+                    multi=True,
                     placeholder='Brand',
                     options=np.vectorize(lambda v: {'label': v.title(), 'value': v})(df.brand.unique())
                 )
@@ -18,6 +19,7 @@ def get_html_content(df, name):
             dbc.Col(
                 dcc.Dropdown(
                     id=name + '-color-dropdown',
+                    multi=True,
                     placeholder='Color',
                     options=np.vectorize(lambda v: {'label': v, 'value': v})(np.sort(df.color.unique()))
                 )
@@ -25,6 +27,7 @@ def get_html_content(df, name):
             dbc.Col(
                 dcc.Dropdown(
                     id=name + '-state-dropdown',
+                    multi=True,
                     placeholder='State',
                     options=np.vectorize(lambda v: {'label': v.title(), 'value': v})(df.state.unique())
                 )
@@ -64,9 +67,9 @@ def get_html_content(df, name):
 
 
 def get_df(df, brand, color, state, year, price):
-    return df[(brand is None or df.brand == brand) &
-              (color is None or df.color == color) &
-              (state is None or df.state == state) &
+    return df[(brand is None or df.brand.isin(brand)) &
+              (color is None or df.color.isin(color)) &
+              (state is None or df.state.isin(state)) &
               (df.price > price[0]) &
               (df.price < price[1]) &
               (df.year > year[0]) & (df.year < year[1])]
